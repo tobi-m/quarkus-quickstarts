@@ -43,11 +43,12 @@ public class OpenApiTest {
     }
 
     @Test
-    public void testOpenApiInfoVersion() {
+    public void testOpenApiQueryParameterName() {
         given().accept(ContentType.JSON)
                 .when().get("/q/openapi")
                 .then()
                 .statusCode(200)
-                .body("info.version", is(equalTo("1.0.0-SNAPSHOT")));
+                .body("path./my-people/all.get.parameters.name", is(equalTo("name")));
     }
 }
+
