@@ -86,7 +86,7 @@ public class PeopleResourceTest {
         given().accept(ContentType.JSON)
                 .when()
                 .queryParam("birthDate", "1988-01-10")
-                .when().get("/my-people/all")
+                .when().get("/my-people")
                 .then().statusCode(200)
                 .and().body("id", contains(1))
                 .and().body("name", contains("John Johnson"));
