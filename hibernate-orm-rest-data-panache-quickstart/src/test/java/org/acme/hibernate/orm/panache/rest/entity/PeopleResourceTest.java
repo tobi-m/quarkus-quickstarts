@@ -82,6 +82,28 @@ public class PeopleResourceTest {
     }
 
     @Test
+    void shouldListPersonsWithFieldFilterBirthDate() {
+        given().accept(ContentType.JSON)
+                .when()
+                .queryParam("birthDate", "1988-01-10")
+                .when().get("/my-people/all")
+                .then().statusCode(200)
+                .and().body("id", contains(1))
+                .and().body("name", contains("John Johnson"));
+    }
+
+    @Test
+    void shouldListPersonsWithBirthDate() {
+        given().accept(ContentType.JSON)
+                .when()
+                .queryParam("date", "1988-01-10")
+                .when().get("/my-people/date")
+                .then().statusCode(200)
+                .and().body("id", contains(1))
+                .and().body("name", contains("John Johnson"));
+    }
+
+    @Test
     void shouldListPersonsWithNamedFilter() {
         given().accept(ContentType.JSON)
                 .queryParam("name", "John")

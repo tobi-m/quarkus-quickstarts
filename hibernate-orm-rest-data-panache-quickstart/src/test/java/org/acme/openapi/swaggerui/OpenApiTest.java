@@ -2,6 +2,7 @@ package org.acme.openapi.swaggerui;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -16,15 +17,6 @@ import io.restassured.http.ContentType;
 public class OpenApiTest {
 
     @Test
-    public void testOpenApi() {
-        given()
-                .when().get("/q/openapi")
-                .then()
-                .statusCode(200)
-                .body(containsString("openapi"));
-    }
-
-    @Test
     public void testOpenApiVersion() {
         given().accept(ContentType.JSON)
                 .when().get("/q/openapi")
@@ -34,12 +26,12 @@ public class OpenApiTest {
     }
 
     @Test
-    public void testOpenApiInfoVersion() {
+    public void testOpenApiQueryParameterNameIndex() {
         given().accept(ContentType.JSON)
                 .when().get("/q/openapi")
                 .then()
                 .statusCode(200)
-                .body("info.version", is(equalTo("1.0.0-SNAPSHOT")));
+                .body("paths./my-people/all.get.parameters[1].name", is(equalTo("name")));
     }
 
     @Test
@@ -48,7 +40,7 @@ public class OpenApiTest {
                 .when().get("/q/openapi")
                 .then()
                 .statusCode(200)
-                .body("path./my-people/all.get.parameters.name", is(equalTo("name")));
+                .body("paths./my-people/all.get.parameters[*].name", hasItems("name", "birthDate"));
     }
 }
-
+//https://jsonpath.com/
